@@ -233,9 +233,17 @@ int main(){
 
     Exemplo = fopen ("exemplo.txt", "r");
 
-    char arquivo[24337];
+    char arquivo[24337], letra;
     double execucao = 0.0;                // para armazenar o tempo de execução do código
-    int lista[5000];
+    int lista[5000], cont=0;
+
+    for (letra=getc(Exemplo), letra!=EOF, letra=getc(Exemplo)){ //Transformar o arquivo em um vetor
+        if (letra==","){
+            letra = "\n";
+        }
+        arquivo[cont]=letra;
+    }
+
     
     //transformar a lista de caracteres em numeros
     removercarac (sizeof(arquivo),arquivo);
@@ -249,9 +257,9 @@ int main(){
  
     // calcula o tempo decorrido encontrando a diferença (end - begin) e
     // dividindo a diferença por CLOCKS_PER_SEC para converter em segundos
-    // time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+    // execucao += (double)(end - begin) / CLOCKS_PER_SEC;
 
-    //fprintf("The elapsed time is %f seconds", time_spent);
+    //fprintf("O tempo utilizado foi %f", execucao);
 
 
 }
