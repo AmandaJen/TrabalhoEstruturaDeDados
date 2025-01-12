@@ -273,7 +273,7 @@ int main(){
 
     }
         BBSort = fopen ("BubbleSort.txt", "w");
-        fprintf (BBSort, "A media do tempo utilizado em 500 numeros foi %f \n", execucao);
+        fprintf (BBSort, "A media do tempo utilizado em 500 numeros foi %f \n", execucao/1000);
 
 
 
