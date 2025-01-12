@@ -203,63 +203,80 @@ void mergeSort(int vetor[], unsigned int esquerda, unsigned int direita) {
 }
 // ========================================================================================
 
-//Remover caracteres
-void removercarac(int tam, char lista[tam]){
-    int contagem;
-    char antigo = ",";
-    char novo = "\n";
-    for (contagem=0;contagem<=tam;contagem++){
-        if (lista[contagem]==antigo){
-            lista[contagem]==novo;
-        }
+void ArqPString(char letra, char Exemplo, int cont, char arquivo[cont]){
+    for (letra=getc(Exemplo); letra!=EOF; letra=getc(Exemplo)){ //Transformar o arquivo em uma string
+        arquivo[cont]=letra;
+        cont++;
     }
 }
 
+void StringPVetor (char arquivo[24337], int lista[5000]){  //Transformar a string em um Vetor
+    char ajuda[5];
+    int contA, contL=0, aju=0;
+    for (contA=0;contA<24337;contA++){
+        ajuda[aju]=arquivo[contA];
+        if (strcmp(ajuda[aju],",")==0){
+            ajuda[aju]='\0';
+            lista[contL]=atoi(ajuda[aju]);
+            contL++;
+            aju=-1;
+        }
+        aju++;
+    }
+    
+}
+
+
+
 int main(){
-    //Arquivos para contagem do bubble sort
-    FILE *BBSort500, *BBSort1000, *BBSort1500, *BBSort2000, *BBSort2500, *BBSort3000, *BBSort3500, *BBSort4000, *BBSort4500, *BBSort5000;
-    //Arquivos para contagem do selection sort
-    FILE *SLSort500, *SLSort1000, *SLSort1500, *SLSort2000, *SLSort2500, *SLSort3000, *SLSort3500, *SLSort4000, *SLSort4500, *SLSort5000;
-    //Arquivos para contagem do insertion sort
-    FILE *INSort500, *INSort1000, *INSort1500, *INSort2000, *INSort2500, *INSort3000, *INSort3500, *INSort4000, *INSort4500, *INSort5000;
-    //Arquivos para contagem do quick sort
-    FILE *QCKSort500, *QCKSort1000, *QCKSort1500, *QCKSort2000, *QCKSort2500, *QCKSort3000, *QCKSort3500, *QCKSort4000, *QCKSort4500, *QCKSort5000;
-    //Arquivos para contagem do heap sort
-    FILE *HPSort500, *HPSort1000, *HPSort1500, *HPSort2000, *HPSort2500, *HPSort3000, *HPSort3500, *HPSort4000, *HPSort4500, *HPSort5000;
-    //Arquivos para contagem do merge sort
-    FILE *MGSort500, *MGSort1000, *MGSort1500, *MGSort2000, *MGSort2500, *MGSort3000, *MGSort3500, *MGSort4000, *MGSort4500, *MGSort5000;
+    //Arquivs para contagem do bubble sort
+    FILE *BBSort;
+    
+    //Arquivo para contagem do selection sort
+    FILE *SLSort;
+    
+    //Arquivo para contagem do insertion sort
+    FILE *INSort;
+
+    //Arquivo para contagem do quick sort
+    FILE *QCKSort;
+
+    //Arquivo para contagem do heap sort
+    FILE *HPSort;
+    
+    //Arquivo para contagem do merge sort
+    FILE *MGSort;
+    
     //Arquivo de numero
     FILE *Exemplo;
 
     Exemplo = fopen ("exemplo.txt", "r");
-
-    char arquivo[24337], letra;
-    double execucao = 0.0;                // para armazenar o tempo de execução do código
-    int lista[5000], cont=0;
-
-    for (letra=getc(Exemplo), letra!=EOF, letra=getc(Exemplo)){ //Transformar o arquivo em um vetor
-        if (letra==","){
-            letra = "\n";
-        }
-        arquivo[cont]=letra;
+    if (Exemplo==NULL){
+        printf ("Erro ao abrir o arquivo");
+        return 1;
     }
 
-    
-    //transformar a lista de caracteres em numeros
-    removercarac (sizeof(arquivo),arquivo);
-    
-    //lista=arquivo;
+    char arquivo[24337], letra;
+    float execucao = 0;                // para armazenar o tempo de execução do código
+    int lista[5000], cont=0;
+    int mil;
 
-    // 
+    ArqPString(letra, Exemplo, cont, arquivo[24337]);
+    fclose (Exemplo);
 
-    //clock_t begin = clock();
-    //clock_t end = clock();
- 
-    // calcula o tempo decorrido encontrando a diferença (end - begin) e
-    // dividindo a diferença por CLOCKS_PER_SEC para converter em segundos
-    // execucao += (double)(end - begin) / CLOCKS_PER_SEC;
+    StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
 
-    //fprintf("O tempo utilizado foi %f", execucao);
+    for(mil=0;mil<1000;mil++){
+        clock_t comeco = clock();
+        bubbleSort(lista,500);
+        clock_t fim = clock ();
+        execucao += (double)(fim-comeco)/CLOCKS_PER_SEC;
+        StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
+
+    }
+        BBSort = fopen ("BubbleSort.txt", "w");
+        fprintf ("A media do tempo utilizado em 500 numeros foi %f \n", execucao);
+
 
 
 }
