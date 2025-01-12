@@ -34,8 +34,6 @@ int trocarValores(int* a, int*b) {
 
 // BUBBLE SORT
 int bubbleSort(int vetor[], unsigned int tam_vetor) {
-    int aux;
-
     for (int i = tam_vetor-1; i > 0; i--) {
         for (int j = 0; j < i; j++) {
             if (vetor[i] < vetor[j]) {
@@ -275,7 +273,7 @@ int main(){
 
     }
         BBSort = fopen ("BubbleSort.txt", "w");
-        fprintf ("A media do tempo utilizado em 500 numeros foi %f \n", execucao);
+        fprintf (BBSort, "A media do tempo utilizado em 500 numeros foi %f \n", execucao);
 
 
 
