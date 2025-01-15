@@ -11,14 +11,14 @@
 #define SAIR 11
 
 // UTILIDADES
-int randomizarVetor(int vetor[], unsigned int tam_vetor) {
-    for(int i = 0; i < tam_vetor; i++) {
-        do {
-            vetor[i] = rand() % 1000;
-        } while (vetor[i] > 1000 && vetor[i] < 0);
-    }
-    return 0;
-}
+//int randomizarVetor(int vetor[], unsigned int tam_vetor) {
+//    for(int i = 0; i < tam_vetor; i++) {
+//        do {
+//            vetor[i] = rand() % 1000;
+//        } while (vetor[i] > 1000 && vetor[i] < 0);
+//    }
+//    return 0;
+//}
 void printVetor(int vetor[], unsigned int tam_vetor) {
     for (unsigned short i = 0; i < tam_vetor; i++) printf("%i ", vetor[i]);
     putchar('\n');
@@ -34,9 +34,9 @@ int trocarValores(int* a, int*b) {
 
 // BUBBLE SORT
 int bubbleSort(int vetor[], unsigned int tam_vetor) {
-    for (int i = tam_vetor-1; i > 0; i--) {
-        for (int j = 0; j < i; j++) {
-            if (vetor[i] < vetor[j]) {
+    for (int i = 0; i < tam_vetor-2; i++) {
+        for (int j = i+1; j < tam_vetor-1; j++) {
+            if (vetor[i] > vetor[j]) {
                 trocarValores(&vetor[i], &vetor[j]);
             }
         }
@@ -201,7 +201,8 @@ void mergeSort(int vetor[], unsigned int esquerda, unsigned int direita) {
 }
 // ========================================================================================
 
-void ArqPString(char letra, char Exemplo, int cont, char arquivo[cont]){
+void ArqPString(FILE *Exemplo, int cont, char arquivo[cont]){
+    char letra;
     for (letra=getc(Exemplo); letra!=EOF; letra=getc(Exemplo)){ //Transformar o arquivo em uma string
         arquivo[cont]=letra;
         cont++;
@@ -254,27 +255,75 @@ int main(){
         return 1;
     }
 
-    char arquivo[24337], letra;
-    float execucao = 0;                // para armazenar o tempo de execução do código
-    int lista[5000], cont=0;
-    int mil;
+    else{
+        char arquivo[24337], letra;
+        float execucao = 0;                // para armazenar o tempo de execução do código
+        int lista[5000], cont=0;
+        int mil, teste;
 
-    ArqPString(letra, Exemplo, cont, arquivo[24337]);
-    fclose (Exemplo);
+        ArqPString(Exemplo, cont, arquivo[24337]);
+        fclose (Exemplo);
 
-    StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
-
-    for(mil=0;mil<1000;mil++){
-        clock_t comeco = clock();
-        bubbleSort(lista,500);
-        clock_t fim = clock ();
-        execucao += (double)(fim-comeco)/CLOCKS_PER_SEC;
         StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
 
-    }
+        //Lista do Bubble Sort
         BBSort = fopen ("BubbleSort.txt", "w");
-        fprintf (BBSort, "A media do tempo utilizado em 500 numeros foi %f \n", execucao);
+        for (teste=500;teste<=5000;teste+500){
+            for(mil=0;mil<1000;mil++){
+                clock_t comeco = clock();
+                bubbleSort(lista,teste);
+                clock_t fim = clock ();
+                execucao += (double)(fim-comeco)/CLOCKS_PER_SEC;
+                StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
 
+            }
+                fprintf (BBSort, "A media do tempo utilizado em %i numeros foi %f \n", teste, execucao/1000);
+        }
+        fclose(BBSort);
 
+        //Lista do Selection Sort
+        SLSort = fopen ("SelectionSort.txt","w");
+        for (teste=500;teste<=5000;teste+500){
+            for(mil=0;mil<1000;mil++){
+                clock_t comeco = clock();
+                selectionSort(lista,teste);
+                clock_t fim = clock ();
+                execucao += (double)(fim-comeco)/CLOCKS_PER_SEC;
+                StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
+
+            }
+                fprintf (SLSort, "A media do tempo utilizado em %i numeros foi %f \n", teste, execucao/1000);
+        }
+        
+        //Lista do Insertion Sort
+        INSort = fopen("InsertionSort.txt", "w");
+        for (teste=500;teste<=5000;teste+500){
+            for(mil=0;mil<1000;mil++){
+                clock_t comeco = clock();
+                insertionSort(lista,teste);
+                clock_t fim = clock ();
+                execucao += (double)(fim-comeco)/CLOCKS_PER_SEC;
+                StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
+
+            }
+                fprintf (INSort, "A media do tempo utilizado em %i numeros foi %f \n", teste, execucao/1000);
+        }
+        fclose(INSort);
+
+        //Lista do Quick Sort
+        //NAO TERMINADA
+        QCKSort = fopen ("QuickSort.txt","w");
+        for (teste=500;teste<=5000;teste+500){
+            for(mil=0;mil<1000;mil++){
+                clock_t comeco = clock();
+                selectionSort(lista,teste);
+                clock_t fim = clock ();
+                execucao += (double)(fim-comeco)/CLOCKS_PER_SEC;
+                StringPVetor(arquivo[sizeof(arquivo)], lista[sizeof(lista)]);
+
+            }
+                fprintf (QCKSort, "A media do tempo utilizado em %i numeros foi %f \n", teste, execucao/1000);
+        }
+    }
 
 }
